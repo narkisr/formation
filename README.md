@@ -2,8 +2,8 @@
 Formation is a configuration library for Clojure projects following simple conventions, it enables:
 
 * Loading edn files from ~/.{project}.edn or /etc/{project}/{project}.edn (by order).
-* Running validations on the configuration 
-* Spitting out errors in pretty printed form into both stdout/timbre (logging).
+* Running [validations](https://github.com/narkisr/substantiation) on the configuration.
+* Spitting out errors in pretty printed form into both stdout/[timbre](https://github.com/ptaoussanis/timbre).
 
 # Usage
 Formation expects the following keys in the edn file (for project named foo):
