@@ -5,6 +5,8 @@ Formation is a configuration library for Clojure projects following simple conve
 * Running [validations](https://github.com/narkisr/substantiation) on the configuration.
 * Spitting out errors in pretty printed form into both stdout/[timbre](https://github.com/ptaoussanis/timbre).
 
+[![Build Status](https://travis-ci.org/narkisr/formation.png)](https://travis-ci.org/narkisr/formation)
+
 # Usage
 Formation expects the following keys in the edn file (for project named foo):
 
