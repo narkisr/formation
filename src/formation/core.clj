@@ -20,7 +20,7 @@
 (defn config-paths [project]
   [(<<"/etc/~{project}/~{project}.edn") (<< "~(System/getProperty \"user.home\")/.~{project}.edn")])
 
-(def path-of [project]
+(defn path-of [project]
   (first (filter #(.exists (file %)) (config-paths project))))
 
 (defn pretty-error 

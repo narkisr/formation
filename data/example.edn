@@ -1,0 +1,8 @@
+{
+ :example {
+   :log {
+     :path "target/example.log"     
+    }        
+    :foo 1
+  }
+}
