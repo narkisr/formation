@@ -7,7 +7,7 @@
      [com.taoensso/timbre "4.8.0"]
      [org.clojure/core.incubator "0.1.4"]
      [com.fzakaria/slf4j-timbre "0.2"]
-     [org.clojure/tools.reader "0.10.0"] ]
+     [org.clojure/tools.reader "1.0.0-beta4"]]
 
    :plugins [
         [lein-tag "0.1.0"]  [lein-set-version "0.4.1"]
