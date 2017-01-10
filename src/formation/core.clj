@@ -1,4 +1,4 @@
-(comment 
+(comment
   Formation, Copyright 2012 Ronen Narkis, narkisr.com
   Licensed under the Apache License,
   Version 2.0  (the "License") you may not use this file except in compliance with the License.
@@ -10,12 +10,15 @@
   limitations under the License.)
 
 (ns formation.core
-  (:require 
+  (:require
+    [taoensso.timbre.appenders.core :as appenders]
     [clojure.tools.reader.edn :as edn]
     [clojure.pprint :refer (pprint)]
-    [taoensso.timbre :refer (set-config! set-level! debug info error warn trace)]
+    [taoensso.timbre :as  timbre]
     [clojure.core.strint :refer (<<)]
     [clojure.java.io :refer (file)]))
+
+(timbre/refer-timbre)
 
 (defn config-paths [project]
   [(<<"/etc/~{project}/~{project}.edn") (<< "~(System/getProperty \"user.home\")/.~{project}.edn")])
@@ -23,32 +26,33 @@
 (defn path-of [project]
   (first (filter #(.exists (file %)) (config-paths project))))
 
-(defn pretty-error 
+(defn pretty-error
   "A pretty print error log"
   [m c project]
   (let [st (java.io.StringWriter.)]
-    (binding [*out* st] 
+    (binding [*out* st]
       (clojure.pprint/pprint m))
-    (set-config! [:shared-appender-config :spit-filename] 
-                 (get-in c [(keyword project) :log :path] (<< "~{project}.log"))) 
-    (set-config! [:appenders :spit :enabled?] true) 
-    (error "Following configuration errors found:\n" (.toString st)))) 
+    (timbre/merge-config!
+     {:appenders
+       {:spit (appenders/spit-appender
+         {:fname (get-in c [(keyword project) :log :path] (<< "~{project}.log"))})}})
+    (error (str "Following configuration errors found:\n" (.toString st)))))
 
 (defn read-and-validate [path validate-conf project]
   (let [c (edn/read-string (slurp path)) es (validate-conf c)]
-    (when-not (empty? es) 
+    (when-not (empty? es)
       (pretty-error es c project)
       (System/exit 1))
     c))
 
 
-(defn config 
+(defn config
   "main configuation"
   [project validate-conf]
   (if-let [path (path-of project)]
-    (read-and-validate path validate-conf project)      
+    (read-and-validate path validate-conf project)
     (when-not (System/getProperty "disable-conf") ; enables repl/testing
-      (error 
-        (<< "Missing configuration file, you should configure ~{project} in either ~(config-paths project)"))  
+      (error
+        (<< "Missing configuration file, you should configure ~{project} in either ~(config-paths project)"))
       (System/exit 1))))
 

@@ -1,5 +1,5 @@
 (ns formation.test.core
-  (:use midje.sweet) 
+  (:use midje.sweet)
   (:require [formation.core :as form])
  )
 
