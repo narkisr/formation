@@ -1,4 +1,4 @@
-(defproject formation "0.1.1"
+(defproject formation "0.2.0"
   :description "A configuration library for Clojure"
   :url "https://github.com/narkisr/fomration"
   :license  {:name "Apache License, Version 2.0" :url "http://www.apache.org/licenses/LICENSE-2.0.html"}
